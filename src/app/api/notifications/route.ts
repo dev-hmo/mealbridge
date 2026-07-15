@@ -3,7 +3,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 // GET /api/notifications - Fetch notifications for current user
 export async function GET(request: NextRequest) {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const { searchParams } = new URL(request.url);
 
   const {
@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
 
 // PATCH /api/notifications - Mark notifications as read
 export async function PATCH(request: NextRequest) {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
 
   const {
     data: { user },

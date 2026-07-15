@@ -3,7 +3,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 // GET /api/listings - Fetch all listings with optional filters
 export async function GET(request: NextRequest) {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const { searchParams } = new URL(request.url);
 
   const category = searchParams.get("category");
@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
 
 // POST /api/listings - Create a new listing
 export async function POST(request: NextRequest) {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
 
   // Verify user is authenticated
   const {

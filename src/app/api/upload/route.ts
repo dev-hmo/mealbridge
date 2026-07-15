@@ -4,7 +4,7 @@ import { PHOTO_BUCKET_NAME, MAX_PHOTOS_PER_LISTING } from "@/lib/constants";
 
 // POST /api/upload - Upload photos to Supabase Storage
 export async function POST(request: NextRequest) {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
 
   const {
     data: { user },

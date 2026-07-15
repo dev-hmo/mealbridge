@@ -3,7 +3,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 // GET /api/reviews - Fetch reviews for a user
 export async function GET(request: NextRequest) {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const { searchParams } = new URL(request.url);
 
   const userId = searchParams.get("user_id");
@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
 
 // POST /api/reviews - Create a new review
 export async function POST(request: NextRequest) {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
 
   const {
     data: { user },

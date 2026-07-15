@@ -1,8 +1,32 @@
-import { createClient } from "@supabase/supabase-js";
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
 
-export function createSupabaseServerClient() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-key";
+export async function createSupabaseServerClient() {
+  const cookieStore = await cookies();
 
-  return createClient(supabaseUrl, supabaseAnonKey);
+  return createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return cookieStore.get(name)?.value;
+        },
+        set(name: string, value: string, options: Record<string, unknown>) {
+          try {
+            cookieStore.set({ name, value, ...options });
+          } catch {
+            // Can't set cookies in Server Component
+          }
+        },
+        remove(name: string, options: Record<string, unknown>) {
+          try {
+            cookieStore.set({ name, value: "", ...options });
+          } catch {
+            // Can't delete cookies in Server Component
+          }
+        },
+      },
+    }
+  );
 }
