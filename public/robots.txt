@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /claims
+Disallow: /my-listings
+Disallow: /notifications
+Disallow: /profile
+
+Sitemap: https://mealbridge.vercel.app/sitemap.xml
